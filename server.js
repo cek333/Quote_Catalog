@@ -30,7 +30,7 @@ const sessionStore = new MongoDBStore({
   }
 });
 // Catch errors
-sessionStore.on('error', function (error) {
+sessionStore.on('error', function(error) {
   console.log(error);
 });
 
@@ -54,13 +54,13 @@ require('./routes/html-routes.js')(app);
 require('./routes/api-routes.js')(app);
 
 // If no API routes are hit, send the React app
-app.use(function (req, res) {
+app.use(function(req, res) {
   res.sendFile(path.join(__dirname, 'client/build/index.html'));
 });
 
 // Syncing our database and logging a message to the user upon success
-db.sequelize.sync().then(function () {
-  app.listen(PORT, function () {
+db.sequelize.sync().then(function() {
+  app.listen(PORT, function() {
     console.log('==> Listening on http://localhost:%s', PORT);
   });
 });
