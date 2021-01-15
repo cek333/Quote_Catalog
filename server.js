@@ -1,6 +1,6 @@
-/* eslint-disable semi */
 // Requiring necessary npm packages
-// require("dotenv")
+require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
@@ -15,7 +15,10 @@ const db = require("./models");
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static('public'));
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
 
 // Setup MongoDB collection for session storage
 const sessionStore = new MongoDBStore({
@@ -23,7 +26,7 @@ const sessionStore = new MongoDBStore({
   collection: 'sessions',
   connectionOptions: {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   }
 });
 // Catch errors
@@ -50,9 +53,14 @@ app.use(apiRoutes);
 require('./routes/html-routes.js')(app);
 require('./routes/api-routes.js')(app);
 
+// If no API routes are hit, send the React app
+app.use(function (req, res) {
+  res.sendFile(path.join(__dirname, 'client/build/index.html'));
+});
+
 // Syncing our database and logging a message to the user upon success
 db.sequelize.sync().then(function () {
   app.listen(PORT, function () {
-    console.log('==> Listening on port %s. Visit http://localhost:%s/ in your browser.', PORT, PORT);
+    console.log('==> Listening on http://localhost:%s', PORT);
   });
 });
