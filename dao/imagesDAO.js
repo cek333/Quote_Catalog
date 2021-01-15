@@ -20,7 +20,7 @@ export default class imagesDAO {
   }
 
   static async getImage(id) {
-    return await images.find({ _id: ObjectId(id) });
+    return await images.findOne({ _id: ObjectId(id) });
   }
 
   static async getUserImages(email) {
