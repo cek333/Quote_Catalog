@@ -1,7 +1,7 @@
+import UsersDAO from '../dao/usersDao';
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
-const db = require("../models");
+const bcrypt = require('bcryptjs');
 
 // Use a Local Strategy. In other words, we want login with a username/email and password
 passport.use(new LocalStrategy(
@@ -11,42 +11,31 @@ passport.use(new LocalStrategy(
   },
   function(email, password, done) {
     // When a user tries to sign in this code runs
-    db.User.findOne({
-      where: {
-        email: email
+    const dbUser = UsersDAO.getUser(email);
+    // If there's no user with the given email
+    if (!dbUser) {
+      return done(null, false, { message: 'Email not found!' });
+    } else {
+      // Note: dbUser.password is the hashed password
+      if (bcrypt.compareSync(password, dbUser.password)) {
+        return done(null, dbUser);
+      } else {
+        // password check failed
+        return done(null, false, { message: 'Incorrect password!' });
       }
-    }).then(function(dbUser) {
-      // If there's no user with the given email
-      if (!dbUser) {
-        return done(null, false, {
-          message: 'Incorrect email.'
-        });
-      } else if (!dbUser.validPassword(password)) {
-        // If there is a user with the given email, but the password the user gives us is incorrect
-        return done(null, false, {
-          message: 'Incorrect password.'
-        });
-      }
-      // If none of the above, return the user
-      return done(null, dbUser);
-    });
+    }
   }
 ));
 
-// In order to help keep authentication state across HTTP requests,
-// Sequelize needs to serialize and deserialize the user
-// Just consider this part boilerplate needed to make it all work
-passport.serializeUser(function(user, cb) {
-  cb(null, user.email);
+// Sequelize/Deserialize logic
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
 });
 
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
-passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
+passport.deserializeUser(function(email, done) {
+  // Don't need user's password, so don't need to fetch user from database.
+  // Send back object containing the email.
+  done(null, { email });
 });
 
 // Exporting our configured passport
