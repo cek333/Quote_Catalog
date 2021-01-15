@@ -1,0 +1,22 @@
+.loginForm {
+  margin: 10px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 0 auto;
+  transform: translateY(10vh);
+}
+
+.loginForm input {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.loginFormBtns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.loginFormBtns button {
+  font-size: 1.5rem;
+}
