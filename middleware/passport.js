@@ -9,9 +9,9 @@ passport.use(new LocalStrategy(
   {
     usernameField: 'email'
   },
-  function(email, password, done) {
+  async function(email, password, done) {
     // When a user tries to sign in this code runs
-    const dbUser = UsersDAO.getUser(email);
+    const dbUser = await UsersDAO.getUser(email);
     // If there's no user with the given email
     if (!dbUser) {
       return done(null, false, { message: 'Email not found!' });
@@ -30,7 +30,7 @@ passport.use(new LocalStrategy(
 
 // Sequelize/Deserialize logic
 passport.serializeUser(function(user, done) {
-  done(null, user._id);
+  done(null, user.email);
 });
 
 passport.deserializeUser(function(email, done) {
