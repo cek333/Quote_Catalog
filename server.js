@@ -1,4 +1,7 @@
 // Requiring necessary npm packages
+const ImagesDAO = require('./dao/imagesDao');
+const UsersDAO = require('./dao/usersDao');
+const { MongoClient } = require('mongodb');
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
@@ -9,7 +12,6 @@ const passport = require('./middleware/passport');
 
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 3001;
-const db = require("./models");
 
 // Creating express app and configuring middleware needed for authentication
 const app = express();
@@ -22,7 +24,8 @@ if (process.env.NODE_ENV === 'production') {
 
 // Setup MongoDB collection for session storage
 const sessionStore = new MongoDBStore({
-  uri: 'mongodb://localhost:27017/connect_mongodb_session_test',
+  uri: process.env.MONGODB_URI,
+  databaseName: process.env.MONGODB_DB,
   collection: 'sessions',
   connectionOptions: {
     useNewUrlParser: true,
@@ -35,23 +38,21 @@ sessionStore.on('error', function(error) {
 });
 
 // We need to use sessions to keep track of our user's login status
-app.use(session(
-  {
-    secret: "keyboard cat",
-    resave: true,
-    saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, // 1 week
-    store: sessionStore
-  }
-));
+app.use(session({
+  secret: process.env.SECRET,
+  resave: true,
+  saveUninitialized: false,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, // 1 week
+  store: sessionStore
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Requiring our routes
-const apiRoutes = require('./routes/api-routes.js');
-app.use(apiRoutes);
-require('./routes/html-routes.js')(app);
-require('./routes/api-routes.js')(app);
+const imageRoutes = require('./routes/imageRoutes.js');
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/image', imageRoutes);
+app.use('/api/user', userRoutes);
 
 // If no API routes are hit, send the React app
 app.use(function(req, res) {
@@ -59,8 +60,18 @@ app.use(function(req, res) {
 });
 
 // Syncing our database and logging a message to the user upon success
-db.sequelize.sync().then(function() {
-  app.listen(PORT, function() {
-    console.log('==> Listening on http://localhost:%s', PORT);
+MongoClient.connect(
+  process.env.MONGODB_URI,
+  { useNewUrlParser: true, useUnifiedTopology: true }
+)
+  .catch(err => {
+    console.error(err.stack);
+    process.exit(1);
+  })
+  .then(async client => {
+    await UsersDAO.injectDB(client);
+    await ImagesDAO.injectDB(client);
+    app.listen(PORT, () => {
+      console.log(`listening on http://localhost:${PORT}`);
+    });
   });
-});
