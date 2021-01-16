@@ -1,12 +1,12 @@
 let users;
 
-export default class UsersDAO {
+class UsersDAO {
   static async injectDB(conn) {
     if (users) {
       return;
     }
     try {
-      users = await conn.db(process.env.MONGODB_URI).collection('users');
+      users = await conn.db(process.env.MONGODB_DB).collection('users');
     } catch (e) {
       console.error(`Unable to connect to collection: ${e}`);
     }
@@ -40,3 +40,5 @@ export default class UsersDAO {
     }
   }
 }
+
+module.exports = UsersDAO;

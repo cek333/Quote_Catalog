@@ -1,14 +1,14 @@
-import { ObjectId } from 'bson';
+const { ObjectId } = require('bson');
 
 let images;
 
-export default class imagesDAO {
+class ImagesDAO {
   static async injectDB(conn) {
     if (images) {
       return;
     }
     try {
-      images = await conn.db(process.env.MONGODB_URI).collection('images');
+      images = await conn.db(process.env.MONGODB_DB).collection('images');
     } catch (e) {
       console.error(`Unable to connect to collection: ${e}`);
     }
@@ -47,3 +47,5 @@ export default class imagesDAO {
     }
   }
 }
+
+module.exports = ImagesDAO;
