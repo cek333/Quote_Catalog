@@ -2,3 +2,40 @@
   font-size: 1.5rem;
   padding: 10px 20px 0px 20px;
 }
+
+.inputForm {
+  margin: 10px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 0 auto;
+  transform: translateY(10vh);
+}
+
+.inputForm input {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.inputForm select {
+  margin-bottom: 5px;
+  margin-left: 5px;
+  font-size: 1rem;
+}
+
+canvas {
+  border: 1px solid black;
+}
+
+.sameRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sideBySide {
+  display: flex;
+}
+
+.inputForm button {
+  font-size: 1.5rem;
+}
