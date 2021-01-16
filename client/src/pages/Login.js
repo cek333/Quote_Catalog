@@ -3,8 +3,8 @@ import API from '../utils/API';
 import './Login.css';
 
 function Login(props) {
-  const emailInput = useRef('');
-  const pswdInput = useRef('');
+  const emailInput = useRef(null);
+  const pswdInput = useRef(null);
   const [ errorMsg, setErrorMsg ] = useState('');
   const [ successMsg, setSuccessMsg ] = useState(' ');
 
