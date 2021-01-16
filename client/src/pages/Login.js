@@ -10,7 +10,7 @@ function Login(props) {
   useEffect(function() {
     if (props.user) {
       // If a logged in user comes back to this page, log them out.
-      API.updateUser('logout', props.email, '', (res) => {
+      API.updateUser('logout', props.user, '', (res) => {
         // console.log('[useEffect (logout)] res=', res);
         if (res.status) {
           props.updateUser('');
