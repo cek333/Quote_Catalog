@@ -27,4 +27,13 @@ router.post('/logout', function(req, res) {
   res.json({ status: true, message: "You've been logged out!" });
 });
 
+// Get current logged in user
+router.get('/fetch', function(req, res) {
+  if (req.user) {
+    res.json({ status: true, email: req.user.email });
+  } else {
+    res.json({ status: false, email: '' });
+  }
+});
+
 module.exports = router;
