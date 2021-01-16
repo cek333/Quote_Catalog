@@ -65,11 +65,11 @@ function Login(props) {
       <form className='loginForm' onSubmit={handleSubmit}>
         <p className='success_msg'>{successMsg}</p>
         <label htmlFor='email'>Email</label>
-        <input type='text' ref={emailInput} name='email' placeholder='email'
-               required onChange={clearMessages} />
+        <input type='text' ref={emailInput} name='email' id='email'
+               placeholder='email' required onChange={clearMessages} />
         <label htmlFor='password'>Password</label>
-        <input type='password' ref={pswdInput} name='password' placeholder='password'
-               required onChange={clearMessages} />
+        <input type='password' ref={pswdInput} name='password' id='password'
+               placeholder='password' required onChange={clearMessages} />
         <div className='loginFormBtns'>
           <button type='submit' onClick={handleSubmit} value='login'>Login In</button>
           <button type='submit' onClick={handleSubmit} value='signup'>Sign Up</button>
