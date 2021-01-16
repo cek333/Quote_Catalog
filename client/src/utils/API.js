@@ -25,22 +25,32 @@ export default class API {
     .then(res => cb(res))
     .catch(err => {
       console.log('[updateUser] err=', err);
-      cb({ });
+      cb({ status: false, message: 'Unexpected error (in updateUser).' });
     })
   }
 
-  static saveImage(email, image, cb=noop) {
+  static getCurUser(cb) {
+    fetch('/api/user/fetch')
+    .then(res => res.json())
+    .then(res => cb(res))
+    .catch(err => {
+      console.log('[getCurUser] err=', err);
+      cb({ status: false, email: '' });
+    });
+  }
+
+  static saveImage(src, quote, cb=noop) {
     let settings = {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, image })
+      body: JSON.stringify({ src, quote })
     }
     fetch(`/api/image`, settings)
     .then(res => res.json())
     .then(res => cb(res))
     .catch(err => {
       console.log('[saveImage] err=', err);
-      cb([]);
+      cb({ status: false, message: 'Unexpected error (in saveImage).'});
     });
   }
 
