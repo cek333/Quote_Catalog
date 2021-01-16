@@ -33,6 +33,10 @@ function Login(props) {
     clearMessages();
     const email = emailInput.current.value;
     const password = pswdInput.current.value;
+    if (!email || !password) {
+      setErrorMsg('Please enter both an email and password!');
+      return;
+    }
     if (evt.target.value==='login') {
       // console.log(`login using email=${email} pswd=${password}`);
       API.updateUser('login', email, password, (res) => {
@@ -72,7 +76,6 @@ function Login(props) {
         <div className='sameRow'>
           <button type='submit' onClick={handleSubmit} value='login'>Login In</button>
           <button type='submit' onClick={handleSubmit} value='signup'>Sign Up</button>
-          <button type='submit' onClick={handleSubmit} value='logout'>Logout</button>
         </div>
         <p className='error_msg'>{errorMsg}</p>
       </form>;
