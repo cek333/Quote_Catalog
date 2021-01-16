@@ -4,20 +4,18 @@ import Header from './components/Header';
 import Login from './pages/Login';
 import Browse from './pages/Browse';
 import Generate from './pages/Generate';
+import API from './utils/API';
 import './App.css';
 
 function App() {
   const [ user, setUser ] = useState('');
 
   useEffect(function() {
-    if (localStorage.getItem('quoteCatalogUser')) {
-      setUser(localStorage.getItem('quoteCatalogUser'));
-    }
+    API.getCurUser((res) => setUser(res.email));
   }, []);
 
   function updateUser(email) {
     setUser(email);
-    localStorage.setItem('quoteCatalogUser', email);
   }
 
   return (
@@ -26,7 +24,7 @@ function App() {
         <Header user={user} />
         <Switch>
           <Route path='/browse' component={Browse} />
-          <Route path='/generate' component={Generate} />
+          <Route path='/generate'><Generate user={user} /></Route>
           <Route path='/login'><Login user={user} updateUser={updateUser} /></Route>
           <Redirect to='/browse' />
         </Switch>
