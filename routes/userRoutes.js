@@ -10,14 +10,14 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 });
 
 // Route for signing up a user.
-router.post('/signup', function(req, res) {
+router.post('/signup', async function(req, res) {
   const hashedPswd = bcrypt.hashSync(req.body.password, 10);
-  const result = UsersDAO.addUser(req.body.email, hashedPswd);
-  if (result.status) {
-    res.json({ ...result, email: req.body.email });
-  } else {
-    // Set status to 400: Bad Request
-    res.status(400).json(result);
+  try {
+    await UsersDAO.addUser(req.body.email, hashedPswd);
+    res.json({ status: true, email: req.body.email, message: 'User successfully added! Please login.' });
+  } catch (e) {
+    console.error(`Error occurred while adding new user, ${e}`);
+    res.status(400).json({ status: false, message: 'Email already exists! Login instead.' });
   }
 });
 
