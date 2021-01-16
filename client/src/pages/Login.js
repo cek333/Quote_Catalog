@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import API from '../utils/API';
-import './Login.css';
 
 function Login(props) {
   const emailInput = useRef(null);
@@ -62,7 +61,7 @@ function Login(props) {
   let display;
   if (props.user==='') {
     display =
-      <form className='loginForm' onSubmit={handleSubmit}>
+      <form className='inputForm' onSubmit={handleSubmit}>
         <p className='success_msg'>{successMsg}</p>
         <label htmlFor='email'>Email</label>
         <input type='text' ref={emailInput} name='email' id='email'
@@ -70,7 +69,7 @@ function Login(props) {
         <label htmlFor='password'>Password</label>
         <input type='password' ref={pswdInput} name='password' id='password'
                placeholder='password' required onChange={clearMessages} />
-        <div className='loginFormBtns'>
+        <div className='sameRow'>
           <button type='submit' onClick={handleSubmit} value='login'>Login In</button>
           <button type='submit' onClick={handleSubmit} value='signup'>Sign Up</button>
           <button type='submit' onClick={handleSubmit} value='logout'>Logout</button>
