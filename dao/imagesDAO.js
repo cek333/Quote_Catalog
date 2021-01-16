@@ -27,8 +27,8 @@ class ImagesDAO {
     return await images.find({ email });
   }
 
-  static addImage(email, src) {
-    return images.insertOne({ email, src }, { w: 'majority' });
+  static addImage(email, src, quote) {
+    return images.insertOne({ email, src, quote }, { w: 'majority' });
   }
 
   static deleteImage(id) {
