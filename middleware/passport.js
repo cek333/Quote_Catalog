@@ -1,4 +1,4 @@
-import UsersDAO from '../dao/usersDao';
+const UsersDAO = require('../dao/usersDao');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
@@ -18,7 +18,8 @@ passport.use(new LocalStrategy(
     } else {
       // Note: dbUser.password is the hashed password
       if (bcrypt.compareSync(password, dbUser.password)) {
-        return done(null, dbUser);
+        // Don't make whole object available to req.user, just the email.
+        return done(null, { email: dbUser._id });
       } else {
         // password check failed
         return done(null, false, { message: 'Incorrect password!' });
