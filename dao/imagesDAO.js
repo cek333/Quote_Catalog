@@ -16,15 +16,15 @@ class ImagesDAO {
 
   static getAllImages() {
     // Add limit?
-    return await images.find({ });
+    return images.find({ });
   }
 
   static getImage(id) {
-    return await images.findOne({ _id: ObjectId(id) });
+    return images.findOne({ _id: ObjectId(id) });
   }
 
   static getUserImages(email) {
-    return await images.find({ email });
+    return images.find({ email });
   }
 
   static addImage(email, src, quote) {
