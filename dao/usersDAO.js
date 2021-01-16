@@ -12,15 +12,15 @@ class UsersDAO {
     }
   }
 
-  static async getUser(email) {
-    return await users.findOne({ _id: email });
+  static getUser(email) {
+    return users.findOne({ _id: email });
   }
 
-  static async addUser(email, password) {
+  static addUser(email, password) {
     return users.insertOne({ _id: email, password }, { w: 'majority' });
   }
 
-  static async deleteUser(email) {
+  static deleteUser(email) {
     return users.deleteOne({ _id: email });
   }
 }
