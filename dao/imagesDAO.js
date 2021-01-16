@@ -14,37 +14,25 @@ class ImagesDAO {
     }
   }
 
-  static async getAllImages() {
+  static getAllImages() {
     // Add limit?
     return await images.find({ });
   }
 
-  static async getImage(id) {
+  static getImage(id) {
     return await images.findOne({ _id: ObjectId(id) });
   }
 
-  static async getUserImages(email) {
+  static getUserImages(email) {
     return await images.find({ email });
   }
 
-  static async addImage(email, src) {
-    try {
-      await images.insertOne({ email, src }, { w: 'majority' });
-      return { status: true, message: 'Image successfully added!' };
-    } catch (e) {
-      console.error(`Error occurred while adding image, ${e}`);
-      return { status: false, message: 'Error occurred while adding image!' };
-    }
+  static addImage(email, src) {
+    return images.insertOne({ email, src }, { w: 'majority' });
   }
 
-  static async deleteImage(id) {
-    try {
-      await images.deleteOne({ _id: ObjectId(id) });
-      return { status: true, message: 'Image successfully deleted!' };
-    } catch (e) {
-      console.error(`Error occurred while deleting image, ${e}`);
-      return { status: false, message: 'Error occurred while deleting image!' };
-    }
+  static deleteImage(id) {
+    return images.deleteOne({ _id: ObjectId(id) });
   }
 }
 
