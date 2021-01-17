@@ -50,7 +50,7 @@ function Login(props) {
       });
     } else {
       // action === 'signup'
-      console.log(`signup using email=${email} pswd=${password}`);
+      // console.log(`signup using email=${email} pswd=${password}`);
       API.updateUser('signup', email, password, (res) => {
         // console.log('[handleSubmit (signup)] res=', res);
         if (res.status) {
