@@ -63,4 +63,14 @@ export default class API {
       cb([]);
     });
   }
+
+  static deleteImage(id, cb=noop) {
+    fetch(`/api/image/${id}`, { method: 'delete' })
+    .then(res => res.json())
+    .then(res => cb(res))
+    .catch(err => {
+      console.log('[deleteImage] err=', err);
+      cb({ status: false, message: 'Unexpected error (in deleteImage).'});
+    });
+  }
 }
