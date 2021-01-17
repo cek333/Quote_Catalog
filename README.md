@@ -1,6 +1,6 @@
 
 # Quote Catalog
-This app allows users to manage a collection of images. Each image contains a quote. Users can create (and later delete) their own quotes. Users can also browse and search for quotes across all users of the application. Right-click on a quote to save it and post it to your social media. 
+This app allows users to manage a collection of images. Each image contains a quote. Users can create (and later delete) their own quotes. Users can also browse and search for quotes across all users of the application. Right-click on a quote to save it and post it to your social media.
 
 ## Technologies Used
 The app was created using HTML, CSS, Javascript, MongoDB, Express, Node.js, and React. Additionally, [passport](http://www.passportjs.org/) was used to authenticate and track logged in users on the server, and [bcryptjs](https://www.npmjs.com/package/bcryptjs) was used for hashing user passwords.
@@ -22,7 +22,7 @@ Type the quote you wish to create in the text box. Use the drop down lists to ch
 ### Browse and Search Quotes
 Click the `Browse` link in the navigation bar to view all the stored quotes. This page is also accessible to users who are not logged in. Right-click then `Save Image As ...` to save an image to your computer.
 
-To search for an image by the text it contains, enter the search term in the search box and click `Search`. Images matching the query will be displayed. To clear the search results, click the `Clear` button. (Be aware that the MongoDB search feature ignores simple common words like 'the', 'and', and 'all', for example. So searches on these words won't return any results.) Also note, if you enter multiple words, you'll get results that match one or more of your search terms. Finally note, you can only search for whole words; the search doesn't check for parts of words.
+To search for an image by the text it contains, enter the search term in the search box and click `Search`. Images matching the query will be displayed. To clear the search results, click the `Clear` button. (Be aware that the MongoDB search feature ignores simple common words like 'the', 'and', and 'all', for example. So searches on these words won't return any results.) Also note, if you enter multiple words, you'll get results that match one or more of your search terms. Finally note, you can only search for whole words; the app doesn't check for parts of words.
 
 ![Browse Screen](readme/browse_screen.png)
 
@@ -39,8 +39,8 @@ From the `Browse` page you can also delete images, however you must be logged in
 The app can potentially be enhanced by a few additional tweaks:
 * Providing a more specific error message when authentication fails. Currently, authentication can fail if either the email is not found, or the password is incorrect. The current error message is not specific on the cause of the failure.
 * Automatically login users after sign up. Currently users must manually login after sign up.
-* Automatically redirect users to the `Browse` page after Login. Currently a message is displayed after login indicating what the user can do next. Perhaps the application can automatically redirect to the `Browse` page after login?
+* Automatically redirect users to the `Browse` page after Login. Currently a message is displayed after login indicating what the user can do next. Perhaps the application can automatically redirect to the `Browse` page?
 
 ## Try It
-You can view the deployed application [here]()
+You can view the deployed application [here](https://quote-catalog-54438.herokuapp.com/)
 As an alternative to creating your own account, you can use the following account: `guest@gmail.com` with password `guestGUEST`.
