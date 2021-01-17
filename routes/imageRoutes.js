@@ -4,8 +4,8 @@ const router = express.Router();
 
 router.route('/:id?')
   .get(async function(req, res) {
-    console.log(`image: get /: Valid user: ${req.user ? req.user.email : 'none'}`);
-    console.log('image: get / for ', req.query);
+    // console.log(`image: get /: Valid user: ${req.user ? req.user.email : 'none'}`);
+    // console.log('image: get / for ', req.query);
     const userEmail = req.user ? req.user.email : 'empty';
     try {
       let result;
@@ -29,7 +29,7 @@ router.route('/:id?')
     }
   })
   .post(async function(req, res) {
-    console.log(`image: post /: Valid user: ${req.user ? req.user.email : 'none'}`);
+    // console.log(`image: post /: Valid user: ${req.user ? req.user.email : 'none'}`);
     try {
       await ImagesDAO.addImage(req.user.email, req.body.src, req.body.quote);
       res.json({ status: true, message: 'Image successfully added!' });
