@@ -1,5 +1,5 @@
 .root {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   padding: 10px 20px 0px 20px;
 }
 
@@ -12,9 +12,9 @@
   transform: translateY(5vh);
 }
 
-.inputForm input {
+form input {
   margin-bottom: 20px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .inputForm select {
@@ -37,5 +37,30 @@ canvas {
 }
 
 .inputForm button {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+}
+
+/* Browse page */
+.icons {
+  width: 12px;
+  height: 12px;
+}
+
+.imageList {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.imageItem {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.searchForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
 }
