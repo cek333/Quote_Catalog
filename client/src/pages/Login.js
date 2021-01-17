@@ -66,7 +66,7 @@ function Login(props) {
   if (props.user==='') {
     display =
       <form className='inputForm' onSubmit={handleSubmit}>
-        <p className='success_msg'>{successMsg}</p>
+        <p className='successMsg'>{successMsg}</p>
         <label htmlFor='email'>Email</label>
         <input type='text' ref={emailInput} name='email' id='email'
                placeholder='email' required onChange={clearMessages} />
@@ -77,7 +77,7 @@ function Login(props) {
           <button type='submit' onClick={handleSubmit} value='login'>Login In</button>
           <button type='submit' onClick={handleSubmit} value='signup'>Sign Up</button>
         </div>
-        <p className='error_msg'>{errorMsg}</p>
+        <p className='errorMsg'>{errorMsg}</p>
       </form>;
   } else {
     display = <p className='success_msg'>{successMsg}</p>;

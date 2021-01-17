@@ -3,17 +3,29 @@
   padding: 10px 20px 0px 20px;
 }
 
+/* Header */
+a {
+  text-decoration: none;
+}
+
+.active {
+  font-weight: bold;
+}
+
+/* Create, Login forms */
 .inputForm {
-  margin: 10px 20px 20px 20px;
   display: flex;
   flex-direction: column;
   max-width: 500px;
   margin: 0 auto;
-  transform: translateY(5vh);
+  /* transform: translateY(5vh); */
 }
 
-form input {
+.inputForm input {
   margin-bottom: 20px;
+}
+
+input {
   font-size: 1.2rem;
 }
 
@@ -36,8 +48,16 @@ canvas {
   display: flex;
 }
 
-.inputForm button {
+form button {
   font-size: 1.2rem;
+}
+
+.successMsg {
+  color: green;
+}
+
+.errorMsg {
+  color: red;
 }
 
 /* Browse page */
@@ -63,4 +83,5 @@ canvas {
   display: flex;
   flex-direction: column;
   max-width: 500px;
+  margin-bottom: 20px;
 }

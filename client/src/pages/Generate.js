@@ -52,8 +52,8 @@ function Generate(props) {
   if (props.user) {
     display =
       <div>
-        <h2>Create Your Own Quote</h2>
         <form className='inputForm' onSubmit={handleSubmit}>
+          <h3>Create Your Own Quote</h3>
           <p className='successMsg'>{successMsg}</p>
           <label htmlFor='quote'>Quote Text:</label>
           <input type='text' ref={quoteInput} name='quote' id='quote'
