@@ -17,7 +17,7 @@ class UsersDAO {
   }
 
   static addUser(email, password) {
-    return users.insertOne({ _id: email, password }, { w: 'majority' });
+    return users.insertOne({ _id: email, password });
   }
 
   static deleteUser(email) {

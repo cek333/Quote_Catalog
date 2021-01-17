@@ -28,7 +28,7 @@ class ImagesDAO {
   }
 
   static addImage(email, src, quote) {
-    return images.insertOne({ email, src, quote }, { w: 'majority' });
+    return images.insertOne({ email, src, quote });
   }
 
   static deleteImage(id) {
