@@ -1,16 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import API from '../utils/API';
-import downloadIcon from '../assets/download_icon.svg';
 import deleteIcon from '../assets/delete_icon.svg';
 
 function Browse(props) {
   const [ imageList, setImageList ] = useState([]);
+  const searchInput = useRef(null);
 
   useEffect(function() {
     API.getImages((res) => setImageList(res));
   }, [])
 
-  function handleSearch() {
+  function handleSearch(evt) {
+    evt.preventDefault();
+    if (evt.target.value === 'search') {
+      API.searchImages(searchInput.current.value,
+        (res) => setImageList(res));
+    } else if (evt.target.value === 'clear') {
+      searchInput.current.value = '';
+      API.getImages((res) => setImageList(res));
+    }
   }
 
   function handleDelete(evt) {
@@ -27,7 +35,11 @@ function Browse(props) {
       <form className='searchForm'>
         <label htmlFor='search'>Search Images</label>
         <input type='text' name='search' id='search'
-                 placeholder='Search Images' onChange={handleSearch} />
+                 placeholder='Search Images' ref={searchInput} />
+        <div className='sameRow'>
+          <button type='button' value='search' onClick={handleSearch}>Search</button>
+          <button type='button' value='clear' onClick={handleSearch}>Clear</button>
+        </div>
       </form>
       <div className='imageList'>
         {imageList.map(imgItem =>

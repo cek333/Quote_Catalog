@@ -64,6 +64,16 @@ export default class API {
     });
   }
 
+  static searchImages(query, cb) {
+    fetch(`/api/image?search=${query}`)
+    .then(res => res.json())
+    .then(res => cb(res))
+    .catch(err => {
+      console.log('[searchImages] err=', err);
+      cb([]);
+    });
+  }
+
   static deleteImage(id, cb=noop) {
     fetch(`/api/image/${id}`, { method: 'delete' })
     .then(res => res.json())

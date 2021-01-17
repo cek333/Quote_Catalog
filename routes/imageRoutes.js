@@ -5,9 +5,15 @@ const router = express.Router();
 router.route('/:id?')
   .get(async function(req, res) {
     console.log(`image: get /: Valid user: ${req.user ? req.user.email : 'none'}`);
+    console.log('image: get / for ', req.query);
     const userEmail = req.user ? req.user.email : 'empty';
     try {
-      const result = await ImagesDAO.getAllImages();
+      let result;
+      if (req.query.search) {
+        result = await ImagesDAO.searchImages(req.query.search);
+      } else {
+        result = await ImagesDAO.getAllImages();
+      }
       // Remove email addresses from results. Also add delete indicator.
       const sanitized = result.map(doc => ({
         _id: doc._id.toString(),
