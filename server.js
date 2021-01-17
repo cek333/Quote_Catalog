@@ -1,6 +1,6 @@
 // Requiring necessary npm packages
-const ImagesDAO = require('./dao/imagesDao');
-const UsersDAO = require('./dao/usersDao');
+const ImagesDAO = require('./dao/imagesDAO');
+const UsersDAO = require('./dao/usersDAO');
 const { MongoClient } = require('mongodb');
 require('dotenv').config();
 const path = require('path');
@@ -49,7 +49,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Requiring our routes
-const imageRoutes = require('./routes/imageRoutes.js');
+const imageRoutes = require('./routes/imageRoutes');
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/image', imageRoutes);
 app.use('/api/user', userRoutes);
