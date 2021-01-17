@@ -32,6 +32,7 @@ function Browse(props) {
 
   return (
     <div>
+      <p>Note, to save an image, right-click, then select 'Save Image As ...'</p>
       <form className='searchForm'>
         <label htmlFor='search'>Search Images</label>
         <input type='text' name='search' id='search'
