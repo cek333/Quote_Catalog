@@ -6,7 +6,7 @@ function Header(props) {
 
   return (
     <header>
-      <div className='title'>Meme Catalog</div>
+      <div className='title'>Quote Catalog</div>
       <nav>
         <NavLink to='/browse' activeClassName='active'>Browse</NavLink>
         <NavLink to='/generate' activeClassName='active'>Create</NavLink>
