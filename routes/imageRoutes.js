@@ -10,7 +10,7 @@ router.route('/:id?')
       const result = await ImagesDAO.getAllImages();
       // Remove email addresses from results. Also add delete indicator.
       const sanitized = result.map(doc => ({
-        _id: doc._id,
+        _id: doc._id.toString(),
         quote: doc.quote,
         src: doc.src,
         enDel: doc.email === userEmail
@@ -49,7 +49,7 @@ router.route('/:id?')
       }
     } else {
       // Valid id not specified
-      res.status(400).json({ status: false, message: 'Invalid image ID!' });
+      res.status(400).json({ status: false, message: 'Please specify image ID!' });
     }
   });
 
