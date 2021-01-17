@@ -26,6 +26,7 @@ function App() {
           <Route path='/browse' component={Browse} />
           <Route path='/generate'><Generate user={user} /></Route>
           <Route path='/login'><Login user={user} updateUser={updateUser} /></Route>
+          <Route path='/logout'><Login user={user} updateUser={updateUser} /></Route>
           <Redirect to='/browse' />
         </Switch>
       </Router>

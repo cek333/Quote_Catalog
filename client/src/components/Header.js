@@ -2,7 +2,9 @@ import { NavLink } from 'react-router-dom';
 import './Header.css';
 
 function Header(props) {
-  let navLoginText = props.user==='' ? 'Login' : 'Logout';
+  let loginLogoutLink = props.user===''
+                          ? <NavLink to='/login' activeClassName='active'>Login</NavLink>
+                          : <NavLink to='/logout' activeClassName='active'>Logout</NavLink>;
 
   return (
     <header>
@@ -10,7 +12,7 @@ function Header(props) {
       <nav>
         <NavLink to='/browse' activeClassName='active'>Browse</NavLink>
         <NavLink to='/generate' activeClassName='active'>Create</NavLink>
-        <NavLink to='/login' activeClassName='active'>{navLoginText}</NavLink>
+        {loginLogoutLink}
       </nav>
     </header>
   );

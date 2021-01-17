@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 import API from '../utils/API';
 
 function Login(props) {
@@ -6,22 +7,26 @@ function Login(props) {
   const pswdInput = useRef(null);
   const [ errorMsg, setErrorMsg ] = useState('');
   const [ successMsg, setSuccessMsg ] = useState(' ');
+  const { pathname } = useLocation();
+  const history = useHistory();
+  const { user: propsUser, updateUser: propsUpdateUser } = props;
 
   useEffect(function() {
-    if (props.user) {
+    if (propsUser && pathname === '/logout') {
       // If a logged in user comes back to this page, log them out.
-      API.updateUser('logout', props.user, '', (res) => {
+      API.updateUser('logout', propsUser, '', (res) => {
         // console.log('[useEffect (logout)] res=', res);
         if (res.status) {
-          props.updateUser('');
+          propsUpdateUser('');
           setSuccessMsg(res.message);
+          history.push('/login');
         } else {
           // not expecting any error message here.
           setErrorMsg(res.message);
         }
       });
     }
-  }, []);
+  }, [propsUser, pathname]);
 
   function clearMessages() {
     setSuccessMsg(' ');
@@ -42,8 +47,8 @@ function Login(props) {
       API.updateUser('login', email, password, (res) => {
         // console.log('[handleSubmit (login)] res=', res);
         if (res.status) {
-          props.updateUser(res.email);
-          setSuccessMsg(`${res.message} Select Browse to view images, or Create to add your own.`);
+          propsUpdateUser(res.email);
+          setSuccessMsg(`${res.message} Select <Browse> to view images, or <Create> to add your own.`);
         } else {
           setErrorMsg(res.message);
         }
@@ -63,7 +68,7 @@ function Login(props) {
   }
 
   let display;
-  if (props.user==='') {
+  if (propsUser==='') {
     display =
       <form className='inputForm' onSubmit={handleSubmit}>
         <p className='successMsg'>{successMsg}</p>
