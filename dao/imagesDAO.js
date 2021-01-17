@@ -16,7 +16,7 @@ class ImagesDAO {
 
   static getAllImages() {
     // Add limit?
-    return images.find({ });
+    return images.find({ }).limit(50).toArray();
   }
 
   static getImage(id) {
@@ -24,7 +24,7 @@ class ImagesDAO {
   }
 
   static getUserImages(email) {
-    return images.find({ email });
+    return images.find({ email }).toArray();
   }
 
   static addImage(email, src, quote) {
