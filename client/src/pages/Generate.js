@@ -84,7 +84,9 @@ function Generate(props) {
       }
       iterations = Math.floor(textLen / MAX_LINE_LEN);
       if (textLen % MAX_LINE_LEN === 0) {
-        iterations--;
+        if (iterations > 0) {
+          iterations--;
+        }
       }
       if (iterations === 0) break;
       do {
