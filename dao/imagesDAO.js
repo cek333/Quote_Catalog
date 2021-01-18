@@ -47,7 +47,8 @@ class ImagesDAO {
   }
 
   static searchImages(query) {
-    return images.find({ $text: { $search: query } }, { score: { $meta: 'textScore' } })
+    return images.find({ $text: { $search: query } })
+      .project({ score: { $meta: 'textScore' } })
       .sort({ score: { $meta: 'textScore' } }).limit(50).toArray();
   }
 
