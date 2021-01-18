@@ -24,7 +24,14 @@ router.post('/signup', async function(req, res) {
 // Route for logging user out
 router.post('/logout', function(req, res) {
   req.logout();
-  res.json({ status: true, message: "You've been logged out!" });
+  req.session.save(function(err) {
+    if (err) {
+      console.error(`Error occurred while logging out user, ${err}`);
+      res.json({ status: false, message: 'Error logging out. Please try again.' });
+    } else {
+      res.json({ status: true, message: "You've been logged out!" });
+    }
+  });
 });
 
 // Get current logged in user

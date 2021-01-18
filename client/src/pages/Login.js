@@ -19,11 +19,12 @@ function Login(props) {
         if (res.status) {
           propsUpdateUser('');
           setSuccessMsg(res.message);
-          history.push('/login');
         } else {
-          // not expecting any error message here.
-          setErrorMsg(res.message);
+          // Not expecting to fall into this branch!
+          // Note, if user is logged in, only success message is shown
+          setSuccessMsg(res.message);
         }
+        history.push('/login');
       });
     }
   }, [propsUser, pathname]);

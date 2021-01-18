@@ -40,7 +40,7 @@ sessionStore.on('error', function(error) {
 // We need to use sessions to keep track of our user's login status
 app.use(session({
   secret: process.env.SECRET,
-  resave: true,
+  resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, // 1 week
   store: sessionStore
