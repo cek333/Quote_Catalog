@@ -12,6 +12,7 @@ function Browse(props) {
 
   function handleSearch(evt) {
     evt.preventDefault();
+    // console.log('[handleSearch]', evt.target.value);
     if (evt.target.value === 'search') {
       API.searchImages(searchInput.current.value,
         (res) => setImageList(res));
@@ -23,7 +24,7 @@ function Browse(props) {
 
   function handleDelete(evt) {
     evt.preventDefault();
-    console.log('[handleDelete]', evt.target);
+    // console.log('[handleDelete]', evt.target);
     API.deleteImage(evt.target.value, (resDel) => {
       // Get updated image list 
       API.getImages((resGet) => setImageList(resGet));
@@ -33,7 +34,7 @@ function Browse(props) {
   return (
     <div>
       <p>Note, to save an image, right-click, then select 'Save Image As ...'</p>
-      <form className='searchForm'>
+      <form className='searchForm' onSubmit={handleSearch}>
         <label htmlFor='search'>Search Images</label>
         <input type='text' name='search' id='search'
                  placeholder='Search Images' ref={searchInput} />
