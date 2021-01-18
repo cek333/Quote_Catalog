@@ -1,4 +1,4 @@
-const ImagesDAO = require('../dao/imagesDao');
+const ImagesDAO = require('../dao/imagesDAO');
 const express = require('express');
 const router = express.Router();
 

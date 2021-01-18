@@ -1,4 +1,4 @@
-const UsersDAO = require('../dao/usersDao');
+const UsersDAO = require('../dao/usersDAO');
 const passport = require('../middleware/passport');
 const express = require('express');
 const router = express.Router();
