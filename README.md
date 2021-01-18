@@ -35,6 +35,17 @@ From the `Browse` page you can also delete images, however you must be logged in
 
 ![Delete Button](readme/delete_closeup.png)
 
+## Setup
+To run the app locally:
+* Create a .env file in the same directory as server.js and add values for the following variables:
+  * MONGODB_DB=quote_catalog
+  * MONGODB_URI=
+  * SECRET=
+* Set the environment variable NODE_ENV=production
+* `npm install`
+* `npm build`
+* After at least one image has been added to the collection, run this script to create an index: `node config/createSearchIndex.js`
+
 ## Potential Future Updates
 The app can potentially be enhanced by a few additional tweaks:
 * Providing a more specific error message when authentication fails. Currently, authentication can fail if either the email is not found, or the password is incorrect. The current error message is not specific on the cause of the failure.
