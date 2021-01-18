@@ -24,8 +24,8 @@ function Browse(props) {
 
   function handleDelete(evt) {
     evt.preventDefault();
-    // console.log('[handleDelete]', evt.target);
-    API.deleteImage(evt.target.value, (resDel) => {
+    // console.log('[handleDelete]', evt, evt.target, evt.currentTarget);
+    API.deleteImage(evt.currentTarget.value, (resDel) => {
       // Get updated image list 
       API.getImages((resGet) => setImageList(resGet));
     });
