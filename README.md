@@ -42,5 +42,5 @@ The app can potentially be enhanced by a few additional tweaks:
 * Automatically redirect users to the `Browse` page after Login. Currently a message is displayed after login indicating what the user can do next. Perhaps the application can automatically redirect to the `Browse` page?
 
 ## Try It
-You can view the deployed application [here](https://quote-catalog-54438.herokuapp.com/)
+You can view the deployed application [here](https://quote-catalog-62587.herokuapp.com/)
 As an alternative to creating your own account, you can use the following account: `guest@gmail.com` with password `guestGUEST`.
