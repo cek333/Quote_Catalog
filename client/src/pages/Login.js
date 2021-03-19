@@ -43,24 +43,14 @@ function Login(props) {
       setErrorMsg('Please enter both an email and password!');
       return;
     }
-    if (evt.target.value==='login') {
+    const action = evt.target.value;
+    if (action==='login' || action==='signup') {
       // console.log(`login using email=${email} pswd=${password}`);
-      API.updateUser('login', email, password, (res) => {
+      API.updateUser(action, email, password, (res) => {
         // console.log('[handleSubmit (login)] res=', res);
         if (res.status) {
           propsUpdateUser(res.email);
           setSuccessMsg(`${res.message} Select <Browse> to view images, or <Create> to add your own.`);
-        } else {
-          setErrorMsg(res.message);
-        }
-      });
-    } else {
-      // action === 'signup'
-      // console.log(`signup using email=${email} pswd=${password}`);
-      API.updateUser('signup', email, password, (res) => {
-        // console.log('[handleSubmit (signup)] res=', res);
-        if (res.status) {
-          setSuccessMsg(res.message);
         } else {
           setErrorMsg(res.message);
         }
