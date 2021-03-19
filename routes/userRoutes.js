@@ -1,11 +1,11 @@
 const UsersDAO = require('../dao/usersDAO');
-const passport = require('../middleware/passport');
+const customAuth = require('../middleware/customPassportAuthenticate');
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 
 // Using the passport.authenticate middleware with our local strategy.
-router.post('/login', passport.authenticate('local'), function(req, res) {
+router.post('/login', customAuth, function(req, res) {
   res.json({ status: true, email: req.user.email, message: "You're now logged in!" });
 });
 
