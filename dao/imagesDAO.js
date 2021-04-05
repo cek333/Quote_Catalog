@@ -7,17 +7,23 @@ class ImagesDAO {
     if (images) {
       return;
     }
-    try {
-      images = await conn.db(process.env.MONGODB_DB).collection('images');
-      // const indexes = await images.listIndexes().toArray();
-      // if (indexes.length <=1 ) {
-      //   // Only id index. Create index for searching quotes
-      //   await images.createIndex({ quote: 'text' });
-      //   console.log('Created text index on quote field!');
-      // }
-    } catch (e) {
-      console.error(`Unable to connect to collection: ${e}`);
-    }
+    conn.db(process.env.MONGODB_DB).collection('images', { strict: true }, async(err, col) => {
+      if (err) {
+        // Collection does not exist. Create collection.
+        try {
+          images = await conn.db(process.env.MONGODB_DB).createCollection('images');
+        } catch (e) {
+          console.err(`Unable to create collection: ${e}`);
+        }
+        try {
+          await images.createIndex({ quote: 'text' });
+        } catch (e) {
+          console.err(`Unable to create index for colletion (images): ${e}`);
+        }
+      } else {
+        images = col;
+      }
+    });
   }
 
   static async createIndex() {
