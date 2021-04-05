@@ -45,12 +45,12 @@ To run the app locally:
 * Set the environment variable NODE_ENV=production
 * `npm install`
 * `npm build`
-* After at least one image has been added to the collection, run this script to create an index: `node config/createSearchIndex.js`
+* ~~After at least one image has been added to the collection, run this script to create an index: `node config/createSearchIndex.js`~~ (Index is now created when the collection is created. Apr 2021)
 
 ## Potential Future Updates
 The app can potentially be enhanced by a few additional tweaks:
-* Providing a more specific error message when authentication fails. Currently, authentication can fail if either the email is not found, or the password is incorrect. The current error message is not specific on the cause of the failure.
-* Automatically login users after sign up. Currently users must manually login after sign up.
+* ~~Providing a more specific error message when authentication fails. Currently, authentication can fail if either the email is not found, or the password is incorrect. The current error message is not specific on the cause of the failure.~~ (Implemented. Apr 2021)
+* ~~Automatically login users after sign up. Currently users must manually login after sign up.~~ (Implemented. Apr 2021)
 * Automatically redirect users to the `Browse` page after Login. Currently a message is displayed after login indicating what the user can do next. Perhaps the application can automatically redirect to the `Browse` page?
 
 ## Try It
