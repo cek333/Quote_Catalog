@@ -9,19 +9,7 @@ export default class API {
       body: JSON.stringify({ email, password })
     }
     fetch(`/api/user/${action}`, settings)
-    .then(res => {
-      // console.log('[updateUser]', res);
-      if (res.status === 401) {
-        // Authentication failed.
-        // Create and send json message
-        return Promise.resolve({ 
-          status: false, 
-          message: 'Authentication Failed! Either the email or password is incorrect!'
-        });
-      } else {
-        return res.json();
-      }
-    })
+    .then(res => res.json())
     .then(res => cb(res))
     .catch(err => {
       console.log('[updateUser] err=', err);

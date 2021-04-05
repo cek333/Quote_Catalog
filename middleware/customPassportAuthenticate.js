@@ -5,7 +5,7 @@ module.exports = function(req, res, next) {
     if (err) {
       next(err);
     } else if (!user) {
-      res.json({ status: false, message: info.message });
+      res.status(401).json({ status: false, message: info.message });
     } else {
       req.logIn(user, function(err) {
         if (err) {
