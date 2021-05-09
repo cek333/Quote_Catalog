@@ -8,17 +8,25 @@ function Browse(props) {
 
   useEffect(function() {
     API.getImages((res) => setImageList(res));
-  }, [])
+  }, []);
+
+  function updateImageList() {
+    const query = searchInput.current.value;
+    if (query) {
+      API.searchImages(query, res => setImageList(res));
+    } else {
+      API.getImages(res => setImageList(res));
+    }
+  }
 
   function handleSearch(evt) {
     evt.preventDefault();
     // console.log('[handleSearch]', evt.target.value);
-    if (evt.target.value === 'search') {
-      API.searchImages(searchInput.current.value,
-        (res) => setImageList(res));
-    } else if (evt.target.value === 'clear') {
-      searchInput.current.value = '';
-      API.getImages((res) => setImageList(res));
+    if (evt.target.value === 'search' || evt.target.value === 'clear') {
+      if (evt.target.value === 'clear') {
+        searchInput.current.value = '';
+      }
+      updateImageList();
     }
   }
 
@@ -27,7 +35,7 @@ function Browse(props) {
     // console.log('[handleDelete]', evt, evt.target, evt.currentTarget);
     API.deleteImage(evt.currentTarget.value, (resDel) => {
       // Get updated image list 
-      API.getImages((resGet) => setImageList(resGet));
+      updateImageList();
     });
   }
 

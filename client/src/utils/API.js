@@ -1,74 +1,48 @@
 const noop = function(val){}; // do nothing.
 
+function fetchJSON(url, cb=noop, method='get', data={}) {
+  let settings = {
+    method,
+    headers: { 'Content-Type': 'application/json' }
+  };
+  if (method === 'post' || method === 'put') {
+    settings.body = JSON.stringify(data);
+  }
+  fetch(url, settings)
+  .then(res => res.json())
+  .then(res => cb(res))
+  .catch(err => {
+    console.log(`[fetchJSON] url=${url} err=`, err);
+    cb({ status: false, message: 'Unexpected Error' });
+  })
+}
+
 export default class API {
   // action: login, signup, logout
   static updateUser(action, email='', password='', cb=noop) {
-    let settings = {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    }
-    fetch(`/api/user/${action}`, settings)
-    .then(res => res.json())
-    .then(res => cb(res))
-    .catch(err => {
-      console.log('[updateUser] err=', err);
-      cb({ status: false, message: 'Unexpected error (in updateUser).' });
-    })
+    const url = `/api/user/${action}`;
+    fetchJSON(url, cb, 'post', { email, password });
   }
 
   static getCurUser(cb) {
-    fetch('/api/user/fetch')
-    .then(res => res.json())
-    .then(res => cb(res))
-    .catch(err => {
-      console.log('[getCurUser] err=', err);
-      cb({ status: false, email: '' });
-    });
+    fetchJSON('/api/user/fetch', cb);
   }
 
   static saveImage(src, quote, cb=noop) {
-    let settings = {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ src, quote })
-    }
-    fetch(`/api/image`, settings)
-    .then(res => res.json())
-    .then(res => cb(res))
-    .catch(err => {
-      console.log('[saveImage] err=', err);
-      cb({ status: false, message: 'Unexpected error (in saveImage).'});
-    });
+    fetchJSON('/api/image', cb, 'post', { src, quote });
   }
 
   static getImages(cb) {
-    fetch('/api/image')
-    .then(res => res.json())
-    .then(res => cb(res))
-    .catch(err => {
-      console.log('[getImages] err=', err);
-      cb([]);
-    });
+    fetchJSON('/api/image', cb);
   }
 
   static searchImages(query, cb) {
-    fetch(`/api/image?search=${query}`)
-    .then(res => res.json())
-    .then(res => cb(res))
-    .catch(err => {
-      console.log('[searchImages] err=', err);
-      cb([]);
-    });
+    const url = `/api/image?search=${query}`;
+    fetchJSON(url, cb);
   }
 
   static deleteImage(id, cb=noop) {
-    fetch(`/api/image/${id}`, { method: 'delete' })
-    .then(res => res.json())
-    .then(res => cb(res))
-    .catch(err => {
-      console.log('[deleteImage] err=', err);
-      cb({ status: false, message: 'Unexpected error (in deleteImage).'});
-    });
+    const url = `/api/image/${id}`;
+    fetchJSON(url, cb, 'delete');
   }
 }
