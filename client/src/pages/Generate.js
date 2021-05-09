@@ -56,67 +56,61 @@ function Generate(props) {
     });
   }
 
-  function splitText(text) {
+  function splitText(quote) {
     const MAX_LINE_LEN = 17;
-    let textLen = text.length;
-    if (textLen === 0) {
-      return [''];
-    }
-    if (textLen > (MAX_LINE_LEN * 4)) {
+    const words = quote.split(' ');
+    const splitWords = [];
+    // Get estimate for number of lines
+    const numOfLines = Math.ceil(quote.length / MAX_LINE_LEN);
+    if (numOfLines > 4) {
       setErrorMsg('Quote is too long!');
       return [''];
     }
-    let segments = [];
-    let prevSp = 0;
-    let nextSp = 0;
-    let sliceStart = 0;
-    let targetLineLen;
-    let iterations;
-    do {
-      if (textLen > (MAX_LINE_LEN * 3)) {
-        targetLineLen = Math.floor(textLen/4);
-      } else if (textLen > (MAX_LINE_LEN * 2)) {
-        targetLineLen = Math.floor(textLen/3);
-      } else if (textLen > MAX_LINE_LEN) {
-        targetLineLen = Math.floor(textLen/2);
+    const targetLen = Math.floor(quote.length / numOfLines);
+    let segment = '';
+    let flush = 0;
+    while(words.length > 0) {
+      let lineLen;
+      if (segment.length > 0) {
+        lineLen = segment.length + words[0].length + 1; // +1 for space btw words
       } else {
-        targetLineLen = MAX_LINE_LEN;
+        lineLen = words[0].length;
       }
-      iterations = Math.floor(textLen / MAX_LINE_LEN);
-      if (textLen % MAX_LINE_LEN === 0) {
-        if (iterations > 0) {
-          iterations--;
-        }
-      }
-      if (iterations === 0) break;
-      do {
-        prevSp = nextSp;
-        nextSp = text.indexOf(' ', prevSp+1);
-        if (nextSp < 0) break;
-      } while((nextSp - sliceStart) < targetLineLen);
-      // Did we go too far over targetLineLen?
-      if (nextSp < 0 || (nextSp - sliceStart) > MAX_LINE_LEN) {
-        if (prevSp === sliceStart) {
-          setErrorMsg("Can't split quote. Consider hyphenating.");
+      if (lineLen > MAX_LINE_LEN) {
+        // Don't add words[0] to segment
+        if (segment === '') {
+          // words[0] itself is too long
+          setErrorMsg(`${words[0]} is too long. Consider splitting.`);
           return [''];
-        } else {
-          nextSp = prevSp;
         }
+        flush = 1; // Flush segment
+      } else {
+        if (lineLen >= targetLen && lineLen <= MAX_LINE_LEN) {
+          flush = 1;
+        }
+        // Continue building up line
+        if (segment.length > 0) {
+          segment += ` ${words[0]}`;
+        } else {
+          segment = words[0];
+        }
+        words.shift();
       }
-      segments.push(text.slice(sliceStart, nextSp));
-      nextSp++; // +1 to skip space
-      sliceStart = nextSp;
-      textLen = text.length - nextSp;
-    } while (iterations > 0);
-    // One segment remains. Push into segments.
-    segments.push(text.slice(sliceStart));
-    if (segments.length > 4) {
-      setErrorMsg("Sorry. Failed to reformat quote. Perhaps it's too long.");
-      // console.log('[splitText]', segments);
-      return [''];
+      if (flush) {
+        splitWords.push(segment);
+        segment = '';
+        flush = 0;
+      }
     }
-    // console.log('[splitText]', segments);
-    return segments;
+    if (segment.length > 0) {
+      splitWords.push(segment);
+    }
+    if (splitWords.length > 4) {
+      setErrorMsg('Quote is too long');
+      return [''];
+    } else {
+      return splitWords;
+    }
   }
 
   let display;
