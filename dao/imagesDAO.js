@@ -1,6 +1,7 @@
 const { ObjectId } = require('bson');
 
 let images;
+const PAGE_LIMIT = 25;
 
 class ImagesDAO {
   static async injectDB(conn) {
@@ -41,7 +42,7 @@ class ImagesDAO {
 
   static getAllImages() {
     // Add limit?
-    return images.find({ }).limit(50).toArray();
+    return images.find({ }).limit(PAGE_LIMIT).toArray();
   }
 
   static getImage(id) {
@@ -49,13 +50,13 @@ class ImagesDAO {
   }
 
   static getUserImages(email) {
-    return images.find({ email }).toArray();
+    return images.find({ email }).limit(PAGE_LIMIT).toArray();
   }
 
   static searchImages(query) {
     return images.find({ $text: { $search: query } })
       .project({ score: { $meta: 'textScore' } })
-      .sort({ score: { $meta: 'textScore' } }).limit(50).toArray();
+      .sort({ score: { $meta: 'textScore' } }).limit(PAGE_LIMIT).toArray();
   }
 
   static addImage(email, src, quote) {
