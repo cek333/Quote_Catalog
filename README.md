@@ -48,6 +48,5 @@ To run the app locally:
 * `npm run test` (To optionally run some tests)
 * `npm run start`
 
-
 ## Try It
 You can view the deployed application [here](https://quote-catalog-62587.herokuapp.com/). As an alternative to creating your own account, you can use the following account: `guest@gmail.com` with password `guestGUEST`.
