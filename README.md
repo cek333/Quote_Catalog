@@ -45,6 +45,7 @@ To run the app locally:
 * Set the environment variable NODE_ENV=production
 * `npm install`
 * `npm build`
+* `npm run test` (To optionally run some tests)
 * `npm run start`
 
 ## Try It
