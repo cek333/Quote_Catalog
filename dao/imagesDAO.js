@@ -14,12 +14,12 @@ class ImagesDAO {
         try {
           images = await conn.db(process.env.MONGODB_DB).createCollection('images');
         } catch (e) {
-          console.err(`Unable to create collection: ${e}`);
+          console.error(`Unable to create collection: ${e}`);
         }
         try {
           await images.createIndex({ quote: 'text' });
         } catch (e) {
-          console.err(`Unable to create index for colletion (images): ${e}`);
+          console.error(`Unable to create index for colletion (images): ${e}`);
         }
       } else {
         images = col;
