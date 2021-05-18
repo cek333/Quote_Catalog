@@ -11,7 +11,11 @@
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build",
-    "test": "jest --verbose test/all*"
+    "test": "jest"
+  },
+  "jest": {
+    "verbose": true,
+    "testMatch": [ "**/__tests__/**/*.[jt]s?(x)" ]
   },
   "repository": {
     "type": "git",
